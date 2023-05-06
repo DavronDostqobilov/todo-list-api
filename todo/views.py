@@ -30,3 +30,48 @@ def add_user():
     # insert user into database
     db.create_user(chat_id=chat_id, first_name=first_name, user_name=username, last_name=last_name)
     return {'status': 200}
+@app.route('/create-task/<chat_id>', methods=['POST'])
+def add_task(chat_id):
+    '''create a new task'''
+    # get data from request body
+    data = request.get_json()
+    print(data)
+    # get all attribu
+    name = data.get('name', False)
+
+    if not name:
+        return {'status': 'name is required'}
+    
+    task_doc_id = db.create_task(chat_id=chat_id, name=name)
+    return {'task_doc_id': task_doc_id}
+
+
+@app.route('/get-tasks/<chat_id>')
+def get_all_tasks(chat_id):
+    '''get all tasks'''
+    # get tasks from database
+    tasks = db.get_tasks(chat_id=chat_id)
+
+    return tasks
+
+
+@app.route('/mark-task/<chat_id>/<task_id>', methods=['POST'])
+def mark(chat_id, task_id):
+    '''mark task as done or undone'''
+    print(chat_id, task_id)
+    task = db.mark_task(chat_id=chat_id, task_id=task_id)
+
+    if task:
+        return dict(task)
+    return {'status': 'does not exist'}
+
+
+@app.route('/delete-task/<chat_id>/<task_id>', methods=['POST'])
+def delete_task(chat_id, task_id):
+    '''delete task'''
+    task = db.delete_task(chat_id=chat_id, task_id=task_id)
+
+    if task:
+        return {'status': 200}
+
+    return {'status': 'error'}
