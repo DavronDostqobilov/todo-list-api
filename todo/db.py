@@ -8,7 +8,6 @@ class DB:
         self.users = db.table('users')
         self.tasks = db.table('tasks')
 
-    
     def create_user(self, chat_id: str, first_name: str, user_name='', last_name='') -> bool:
         '''create a new user'''
         user_data = {
