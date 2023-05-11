@@ -66,10 +66,10 @@ def mark(chat_id, task_id):
     return {'status': 'does not exist'}
 
 
-@app.route('/delete-task/<chat_id>/<task_id>', methods=['POST'])
-def delete_task(chat_id, task_id):
+@app.route('/delete-task/<chat_id>', methods=['POST'])
+def delete_task(chat_id):
     '''delete task'''
-    task = db.delete_task(chat_id=chat_id, task_id=task_id)
+    task = db.delete_task(chat_id=chat_id)
 
     if task:
         return {'status': 200}

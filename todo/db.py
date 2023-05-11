@@ -54,12 +54,12 @@ class DB:
         return False
     
 
-    def delete_task(self, chat_id: str, task_id: str) -> bool:
+    def delete_task(self, chat_id: str) -> bool:
         '''delete task'''
         # create query obj
         q = Query()
 
-        if self.tasks.contains(cond=(q.chat_id == chat_id), doc_id=int(task_id)):
-            return self.tasks.remove(doc_ids=[int(task_id)])
+        if self.tasks.contains(cond=(q.chat_id == chat_id)):
+            return self.tasks.remove(q.chat_id==chat_id)
         
         return False
