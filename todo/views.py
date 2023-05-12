@@ -58,7 +58,7 @@ def get_all_tasks(chat_id):
 @app.route('/mark-task/<chat_id>/<task_id>', methods=['POST'])
 def mark(chat_id, task_id):
     '''mark task as done or undone'''
-    print(chat_id, task_id)
+    #print(chat_id, task_id)
     task = db.mark_task(chat_id=chat_id, task_id=task_id)
 
     if task:
